@@ -256,15 +256,7 @@ export function updateContainer(
 
   callback = callback === undefined ? null : callback;
   if (callback !== null) {
-    if (true) {
-      if (typeof callback !== 'function') {
-        console.error(
-          'render(...): Expected the last optional `callback` argument to be a ' +
-            'function. Instead received: %s.',
-          callback,
-        );
-      }
-    }
+
     update.callback = callback;
   }
   console.log(current, update)

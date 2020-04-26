@@ -1068,6 +1068,7 @@ function performSyncWorkOnRoot(root) {
 function finishSyncRender(root) {
   // Set this to null to indicate there's no in-progress render.
   workInProgressRoot = null;
+  debugger;
   commitRoot(root);
 }
 
@@ -1731,6 +1732,7 @@ function commitRootImpl(root, renderPriorityLevel) {
     // no more pending effects.
     // TODO: Might be better if `flushPassiveEffects` did not automatically
     // flush synchronous work at the end, to avoid factoring hazards like this.
+    debugger
     flushPassiveEffects();
   } while (rootWithPendingPassiveEffects !== null);
   flushRenderPhaseStrictModeWarningsInDEV();
@@ -1803,7 +1805,7 @@ function commitRootImpl(root, renderPriorityLevel) {
     firstEffect = finishedWork.firstEffect;
   }
 
-  if (firstEffect !== null) {
+  if (firstEffect !== null) { // 走这里
     const prevExecutionContext = executionContext;
     executionContext |= CommitContext;
     const prevInteractions = pushInteractions(root);
@@ -1822,16 +1824,11 @@ function commitRootImpl(root, renderPriorityLevel) {
     prepareForCommit(root.containerInfo);
     nextEffect = firstEffect;
     do {
-      if (true) {
-        invokeGuardedCallback(null, commitBeforeMutationEffects, null);
-        if (hasCaughtError()) {
-          invariant(nextEffect !== null, 'Should be working on an effect.');
-          const error = clearCaughtError();
-          captureCommitPhaseError(nextEffect, error);
-          nextEffect = nextEffect.nextEffect;
-        }
+      if (false) {
+        
       } else {
         try {
+          debugger
           commitBeforeMutationEffects();
         } catch (error) {
           invariant(nextEffect !== null, 'Should be working on an effect.');
@@ -1852,22 +1849,11 @@ function commitRootImpl(root, renderPriorityLevel) {
     startCommitHostEffectsTimer();
     nextEffect = firstEffect;
     do {
-      if (true) {
-        invokeGuardedCallback(
-          null,
-          commitMutationEffects,
-          null,
-          root,
-          renderPriorityLevel,
-        );
-        if (hasCaughtError()) {
-          invariant(nextEffect !== null, 'Should be working on an effect.');
-          const error = clearCaughtError();
-          captureCommitPhaseError(nextEffect, error);
-          nextEffect = nextEffect.nextEffect;
-        }
+      if (false) {
+        
       } else {
         try {
+          debugger
           commitMutationEffects(root, renderPriorityLevel);
         } catch (error) {
           invariant(nextEffect !== null, 'Should be working on an effect.');
@@ -1891,22 +1877,11 @@ function commitRootImpl(root, renderPriorityLevel) {
     startCommitLifeCyclesTimer();
     nextEffect = firstEffect;
     do {
-      if (true) {
-        invokeGuardedCallback(
-          null,
-          commitLayoutEffects,
-          null,
-          root,
-          expirationTime,
-        );
-        if (hasCaughtError()) {
-          invariant(nextEffect !== null, 'Should be working on an effect.');
-          const error = clearCaughtError();
-          captureCommitPhaseError(nextEffect, error);
-          nextEffect = nextEffect.nextEffect;
-        }
+      if (false) {
+        
       } else {
         try {
+          debugger
           commitLayoutEffects(root, expirationTime);
         } catch (error) {
           invariant(nextEffect !== null, 'Should be working on an effect.');

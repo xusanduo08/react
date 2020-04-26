@@ -214,6 +214,7 @@ export function reconcileChildren(
       nextChildren,
       renderExpirationTime,
     );
+    debugger;
   } else {
     // If the current child is the same as the work in progress, it means that
     // we haven't yet started any work on these children. Therefore, we use
@@ -1002,7 +1003,7 @@ function updateHostRoot(current, workInProgress, renderExpirationTime) {
     );
   }
   const root: FiberRoot = workInProgress.stateNode;
-  if (root.hydrate && enterHydrationState(workInProgress)) {
+  if (root.hydrate && enterHydrationState(workInProgress)) { // false
     // If we don't have any current children this might be the first pass.
     // We always try to hydrate. If this isn't a hydration pass there won't
     // be any children to hydrate which is effectively the same thing as
@@ -1030,6 +1031,7 @@ function updateHostRoot(current, workInProgress, renderExpirationTime) {
   } else {
     // Otherwise reset hydration state in case we aborted and resumed another
     // root.
+    debugger;
     reconcileChildren(
       current,
       workInProgress,
@@ -1038,7 +1040,7 @@ function updateHostRoot(current, workInProgress, renderExpirationTime) {
     );
     resetHydrationState();
   }
-  return workInProgress.child;
+  return workInProgress.child; // 返回下一个需要处理的fiber node
 }
 
 function updateHostComponent(current, workInProgress, renderExpirationTime) {
@@ -3055,6 +3057,7 @@ function beginWork(
       // nor legacy context. Set this to false. If an update queue or context
       // consumer produces a changed value, it will set this to true. Otherwise,
       // the component will assume the children have not changed and bail out.
+      debugger;
       didReceiveUpdate = false;
     }
   } else {

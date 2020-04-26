@@ -327,10 +327,6 @@ export function processUpdateQueue<State>(
 
   hasForceUpdate = false;
 
-  if (true) {
-    currentlyProcessingQueue = queue.shared;
-  }
-
   // The last rebase update that is NOT part of the base state.
   let baseQueue = queue.baseQueue;
 
