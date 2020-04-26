@@ -976,7 +976,7 @@ function commitContainer(finishedWork: Fiber) {
   if (!supportsPersistence) {
     return;
   }
-
+  console.log(finishedWork)
   switch (finishedWork.tag) {
     case ClassComponent:
     case HostComponent:
@@ -1354,6 +1354,7 @@ function commitDeletion(
 }
 
 function commitWork(current: Fiber | null, finishedWork: Fiber): void {
+  console.log(111)
   if (!supportsMutation) {
     switch (finishedWork.tag) {
       case FunctionComponent:

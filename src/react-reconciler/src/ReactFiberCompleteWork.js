@@ -347,6 +347,7 @@ if (supportsMutation) {
   ) {
     // We only have the top Fiber that was created but we need recurse down its
     // children to find all the terminal nodes.
+    debugger
     let node = workInProgress.child;
     while (node !== null) {
       // eslint-disable-next-line no-labels
@@ -681,6 +682,7 @@ function completeWork(
       return null;
     }
     case HostComponent: {
+      debugger;
       popHostContext(workInProgress);
       const rootContainerInstance = getRootHostContainer();
       const type = workInProgress.type;
@@ -753,7 +755,7 @@ function completeWork(
             currentHostContext,
             workInProgress,
           );
-
+          debugger;
           appendAllChildren(instance, workInProgress, false, false);
 
           // This needs to be set before we mount Flare event listeners

@@ -197,18 +197,6 @@ let didWarnAboutRevealOrder;
 let didWarnAboutTailOptions;
 let didWarnAboutDefaultPropsOnFunctionComponent;
 
-if (true) {
-  didWarnAboutBadClass = {};
-  didWarnAboutModulePatternComponent = {};
-  didWarnAboutContextTypeOnFunctionComponent = {};
-  didWarnAboutGetDerivedStateOnFunctionComponent = {};
-  didWarnAboutFunctionRefs = {};
-  didWarnAboutReassigningProps = false;
-  didWarnAboutRevealOrder = {};
-  didWarnAboutTailOptions = {};
-  didWarnAboutDefaultPropsOnFunctionComponent = {};
-}
-
 export function reconcileChildren(
   current: Fiber | null,
   workInProgress: Fiber,
@@ -985,6 +973,7 @@ function pushHostRootContext(workInProgress) {
 }
 
 function updateHostRoot(current, workInProgress, renderExpirationTime) {
+  debugger;
   pushHostRootContext(workInProgress);
   const updateQueue = workInProgress.updateQueue;
   invariant(
@@ -2877,24 +2866,7 @@ function beginWork(
   renderExpirationTime: ExpirationTime,
 ): Fiber | null {
   const updateExpirationTime = workInProgress.expirationTime;
-
-  if (true) {
-    if (workInProgress._debugNeedsRemount && current !== null) {
-      // This will restart the begin phase with a new fiber.
-      return remountFiber(
-        current,
-        workInProgress,
-        createFiberFromTypeAndProps(
-          workInProgress.type,
-          workInProgress.key,
-          workInProgress.pendingProps,
-          workInProgress._debugOwner || null,
-          workInProgress.mode,
-          workInProgress.expirationTime,
-        ),
-      );
-    }
-  }
+  debugger;
 
   if (current !== null) {
     const oldProps = current.memoizedProps;
@@ -3146,7 +3118,9 @@ function beginWork(
       );
     }
     case HostRoot:
-      return updateHostRoot(current, workInProgress, renderExpirationTime);
+      debugger;
+      let tmp = updateHostRoot(current, workInProgress, renderExpirationTime);
+      return tmp;
     case HostComponent:
       return updateHostComponent(current, workInProgress, renderExpirationTime);
     case HostText:

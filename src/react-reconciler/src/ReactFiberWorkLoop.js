@@ -409,6 +409,7 @@ export function scheduleUpdateOnFiber(
       // This is a legacy edge case. The initial mount of a ReactDOM.render-ed
       // root inside of batchedUpdates should be synchronous, but layout updates
       // should be deferred until the end of the batch.
+      debugger;
       performSyncWorkOnRoot(root);
     } else {
       ensureRootIsScheduled(root);
@@ -622,6 +623,7 @@ function ensureRootIsScheduled(root: FiberRoot) {
   let callbackNode;
   if (expirationTime === Sync) {
     // Sync React callbacks are scheduled on a special internal queue
+    debugger;
     callbackNode = scheduleSyncCallback(performSyncWorkOnRoot.bind(null, root));
   } else if (disableSchedulerTimeoutBasedOnReactExpirationTime) {
     callbackNode = scheduleCallback(
@@ -1001,7 +1003,7 @@ function performSyncWorkOnRoot(root) {
   // If the root or expiration time have changed, throw out the existing stack
   // and prepare a fresh one. Otherwise we'll continue where we left off.
   if (root !== workInProgressRoot || expirationTime !== renderExpirationTime) {
-    prepareFreshStack(root, expirationTime);
+    prepareFreshStack(root, expirationTime); // 初始化 workInProgress
     startWorkOnPendingInteractions(root, expirationTime);
   }
 
@@ -1016,6 +1018,7 @@ function performSyncWorkOnRoot(root) {
 
     do {
       try {
+        debugger
         workLoopSync();
         break;
       } catch (thrownValue) {
@@ -1253,6 +1256,7 @@ function prepareFreshStack(root, expirationTime) {
     }
   }
   workInProgressRoot = root;
+  debugger
   workInProgress = createWorkInProgress(root.current, null);
   renderExpirationTime = expirationTime;
   workInProgressRootExitStatus = RootIncomplete;
@@ -1459,6 +1463,7 @@ function inferTimeFromExpirationTimeWithSuspenseConfig(
 function workLoopSync() {
   // Already timed out, so perform work without checking if we need to yield.
   while (workInProgress !== null) {
+    debugger
     workInProgress = performUnitOfWork(workInProgress);
   }
 }
@@ -1476,13 +1481,14 @@ function performUnitOfWork(unitOfWork: Fiber): Fiber | null {
   // nothing should rely on this, but relying on it here means that we don't
   // need an additional field on the work in progress.
   const current = unitOfWork.alternate;
-
+  
   startWorkTimer(unitOfWork);
   setCurrentDebugFiberInDEV(unitOfWork);
 
   let next;
   if (enableProfilerTimer && (unitOfWork.mode & ProfileMode) !== NoMode) {
     startProfilerTimer(unitOfWork);
+    debugger;
     next = beginWork(current, unitOfWork, renderExpirationTime);
     stopProfilerTimerIfRunningAndRecordDelta(unitOfWork, true);
   } else {
@@ -1495,7 +1501,7 @@ function performUnitOfWork(unitOfWork: Fiber): Fiber | null {
     // If this doesn't spawn new work, complete the current work.
     next = completeUnitOfWork(unitOfWork);
   }
-
+  console.log(next)
   ReactCurrentOwner.current = null;
   return next;
 }
@@ -2623,17 +2629,6 @@ function checkForNestedUpdates() {
     );
   }
 
-  if (true) {
-    if (nestedPassiveUpdateCount > NESTED_PASSIVE_UPDATE_LIMIT) {
-      nestedPassiveUpdateCount = 0;
-      console.error(
-        'Maximum update depth exceeded. This can happen when a component ' +
-          "calls setState inside useEffect, but useEffect either doesn't " +
-          'have a dependency array, or one of the dependencies changes on ' +
-          'every render.',
-      );
-    }
-  }
 }
 
 function flushRenderPhaseStrictModeWarningsInDEV() {
@@ -2738,7 +2733,9 @@ if (true && replayFailedUnitOfWorkWithInvokeGuardedCallback) {
       unitOfWork,
     );
     try {
-      return originalBeginWork(current, unitOfWork, expirationTime);
+      let tmp = originalBeginWork(current, unitOfWork, expirationTime);
+      debugger;
+      return tmp;
     } catch (originalError) {
       if (
         originalError !== null &&

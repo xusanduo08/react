@@ -231,18 +231,10 @@ export function updateContainer(
   parentComponent: ?React$Component<any, any>,
   callback: ?Function,
 ): ExpirationTime {
-  if (true) {
-    onScheduleRoot(container, element);
-  }
+
   const current = container.current;
   const currentTime = requestCurrentTimeForUpdate();
-  if (true) {
-    // $FlowExpectedError - jest isn't a global, and isn't recognized outside of tests
-    if ('undefined' !== typeof jest) {
-      warnIfUnmockedScheduler(current);
-      warnIfNotScopedWithMatchingAct(current);
-    }
-  }
+
   const suspenseConfig = requestCurrentSuspenseConfig();
   const expirationTime = computeExpirationForFiber(
     currentTime,
@@ -255,23 +247,6 @@ export function updateContainer(
     container.context = context;
   } else {
     container.pendingContext = context;
-  }
-
-  if (true) {
-    if (
-      ReactCurrentFiberIsRendering &&
-      ReactCurrentFiberCurrent !== null &&
-      !didWarnAboutNestedUpdates
-    ) {
-      didWarnAboutNestedUpdates = true;
-      console.error(
-        'Render methods should be a pure function of props and state; ' +
-          'triggering nested component updates from render is not allowed. ' +
-          'If necessary, trigger nested updates in componentDidUpdate.\n\n' +
-          'Check the render method of %s.',
-        getComponentName(ReactCurrentFiberCurrent.type) || 'Unknown',
-      );
-    }
   }
 
   const update = createUpdate(expirationTime, suspenseConfig);
@@ -292,7 +267,8 @@ export function updateContainer(
     }
     update.callback = callback;
   }
-
+  console.log(current, update)
+  debugger;
   enqueueUpdate(current, update);
   scheduleWork(current, expirationTime);
 

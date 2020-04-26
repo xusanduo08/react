@@ -196,9 +196,7 @@ export function createUpdate(
     next: (null: any),
   };
   update.next = update;
-  if (true) {
-    update.priority = getCurrentPriorityLevel();
-  }
+
   return update;
 }
 
@@ -220,20 +218,6 @@ export function enqueueUpdate<State>(fiber: Fiber, update: Update<State>) {
   }
   sharedQueue.pending = update;
 
-  if (true) {
-    if (
-      currentlyProcessingQueue === sharedQueue &&
-      !didWarnUpdateInsideUpdate
-    ) {
-      console.error(
-        'An update (setState, replaceState, or forceUpdate) was scheduled ' +
-          'from inside an update function. Update functions should be pure, ' +
-          'with zero side-effects. Consider using componentDidUpdate or a ' +
-          'callback.',
-      );
-      didWarnUpdateInsideUpdate = true;
-    }
-  }
 }
 
 export function enqueueCapturedUpdate<State>(
@@ -501,9 +485,6 @@ export function processUpdateQueue<State>(
     workInProgress.memoizedState = newState;
   }
 
-  if (true) {
-    currentlyProcessingQueue = null;
-  }
 }
 
 function callCallback(callback, context) {
